@@ -5,15 +5,54 @@
     font-family: 'Noto Sans JP', sans-serif;
 }
 
+.choices {
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+}
+
+.btn {
+    padding: 5px 10px;
+    border: none;
+    background-color: rgb(255, 111, 111);
+    color: white;
+    cursor: pointer;
+}
+
 .timer {
     display: flex;
     justify-content: center;
     align-items: baseline;
     gap: 5px;
 }
-.hours,.minutes,.scolons{
+
+.hours,
+.minutes,
+.scolons {
     font-size: 150px;
 }
-.seconds{
+
+.seconds {
     font-size: 50px;
+}
+
+.start-container {
+    display: flex;
+    justify-content: center;
+}
+
+.start {
+    padding: 5px 10px;
+    border: none;
+    background-color: rgb(0, 173, 0);
+    color: white;
+    cursor: pointer;
+}
+
+.stop {
+    background-color: rgb(255, 73, 73);
+}
+
+.unclick:hover {
+    cursor: not-allowed;
 }
