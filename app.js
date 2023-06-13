@@ -2,17 +2,29 @@ let currentState = 's';
 let timerState = 'pomodoro';
 let intervalID;
 let occ = 1;
-let rangeTolbreak = 4;
+let rangeTolbreak = parseInt(document.querySelector('.range-lbr').value) || 4;
 
 let pmuhrs = '00'; //pomodoro user hours
-let pmumins = '00';
-let pmusecs = '03';
+let pmumins = '25';
+let pmusecs = '00';
 let sbruhrs = '00'; //short break user hours
-let sbrumins = '00';
-let sbrusecs = '04';
+let sbrumins = '05';
+let sbrusecs = '00';
 let lbruhrs = '00'; //long break user hours
-let lbrumins = '00';
-let lbrusecs = '05';
+let lbrumins = '15';
+let lbrusecs = '00';
+
+document.querySelector('.upmh').value = '00';
+document.querySelector('.upmm').value = '25';
+document.querySelector('.upms').value = '00';
+
+document.querySelector('.usbrh').value = '00';
+document.querySelector('.usbrm').value = '05';
+document.querySelector('.usbrs').value = '00';
+
+document.querySelector('.ulbrh').value = '00';
+document.querySelector('.ulbrm').value = '15';
+document.querySelector('.ulbrs').value = '00';
 
 let startBtn = document.querySelector('.start');
 startBtn.addEventListener('click', countdown);
@@ -156,11 +168,50 @@ function changeTime() {
 
 let settingsBtn = document.querySelector('.settings-btn');
 settingsBtn.addEventListener('click', () => {
-    settings = document.querySelector('.settings-container');
+    let settings = document.querySelector('.settings-container');
     settings.classList.toggle('show');
 });
 let rsettingsBtn = document.querySelector('.remove-settings-btn');
 rsettingsBtn.addEventListener('click', () => {
-    settings = document.querySelector('.settings-container');
+    let settings = document.querySelector('.settings-container');
     settings.classList.toggle('show');
+});
+
+document.querySelector('.save-settings').addEventListener('click', () => {
+    rangeTolbreak = parseInt(document.querySelector('.range-lbr').value) || 4;
+
+    pmuhrs = document.querySelector('.upmh').value || '00';
+    pmumins = document.querySelector('.upmm').value || '25';
+    pmusecs = document.querySelector('.upms').value || '00';
+
+    sbruhrs = document.querySelector('.usbrh').value || '00';
+    sbrumins = document.querySelector('.usbrm').value || '05';
+    sbrusecs = document.querySelector('.usbrs').value || '00';
+
+    lbruhrs = document.querySelector('.ulbrh').value || '00';
+    lbrumins = document.querySelector('.ulbrm').value || '15';
+    lbrusecs = document.querySelector('.ulbrs').value || '00';
+
+    changeTime();
+
+    let settings = document.querySelector('.settings-container');
+    settings.classList.toggle('show');
+});
+
+document.querySelector('.reset-settings').addEventListener('click', () => {
+    rangeTolbreak = 4;
+
+    pmuhrs = '00';
+    pmumins = '25';
+    pmusecs = '00';
+
+    sbruhrs = '00';
+    sbrumins = '05';
+    sbrusecs = '00';
+
+    lbruhrs = '00';
+    lbrumins = '15';
+    lbrusecs = '00';
+
+    changeTime();
 });
