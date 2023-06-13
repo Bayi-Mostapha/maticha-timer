@@ -168,16 +168,24 @@ function changeTime() {
     }
 }
 
+let settings = document.querySelector('.settings-container');
 let settingsBtn = document.querySelector('.settings-btn');
 settingsBtn.addEventListener('click', () => {
-    let settings = document.querySelector('.settings-container');
     settings.classList.toggle('show');
 });
 let rsettingsBtn = document.querySelector('.remove-settings-btn');
 rsettingsBtn.addEventListener('click', () => {
-    let settings = document.querySelector('.settings-container');
     settings.classList.toggle('show');
 });
+// let settingsMenu = document.querySelector('.settings');
+// document.addEventListener('click', (event) => {
+//     if (settings.classList.contains('show')) {
+//         let isClicked = settingsMenu.contains(event.target);
+//         if (!isClicked) {
+//             settings.classList.toggle('show');
+//         }
+//     }
+// });
 
 document.querySelector('.save-settings').addEventListener('click', () => {
     rangeTolbreak = parseInt(document.querySelector('.range-lbr').value) || 4;
@@ -187,8 +195,8 @@ document.querySelector('.save-settings').addEventListener('click', () => {
     pmuhrs = document.querySelector('.upmh').value || '00';
     if (document.querySelector('.upmm').value.length === 1) {
         document.querySelector('.upmm').value = '0' + document.querySelector('.upmm').value;
-        pmumins = document.querySelector('.upmm').value || '25';
     }
+    pmumins = document.querySelector('.upmm').value || '25';
     if (document.querySelector('.upms').value.length === 1) {
         document.querySelector('.upms').value = '0' + document.querySelector('.upms').value;
     }
@@ -228,6 +236,7 @@ document.querySelector('.save-settings').addEventListener('click', () => {
 
 document.querySelector('.reset-settings').addEventListener('click', () => {
     rangeTolbreak = 4;
+    document.querySelector('.range-lbr').value = 4;
 
     pmuhrs = '00';
     pmumins = '25';
@@ -240,6 +249,18 @@ document.querySelector('.reset-settings').addEventListener('click', () => {
     lbruhrs = '00';
     lbrumins = '15';
     lbrusecs = '00';
+
+    document.querySelector('.upmh').value = '00';
+    document.querySelector('.upmm').value = '25';
+    document.querySelector('.upms').value = '00';
+
+    document.querySelector('.usbrh').value = '00';
+    document.querySelector('.usbrm').value = '05';
+    document.querySelector('.usbrs').value = '00';
+
+    document.querySelector('.ulbrh').value = '00';
+    document.querySelector('.ulbrm').value = '15';
+    document.querySelector('.ulbrs').value = '00';
 
     changeTime();
 });
