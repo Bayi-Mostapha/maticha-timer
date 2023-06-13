@@ -1,6 +1,18 @@
 let currentState = 's';
 let timerState = 'pomodoro';
 let intervalID;
+let occ = 1;
+let rangeTolbreak = 4;
+
+let pmuhrs = '00'; //pomodoro user hours
+let pmumins = '00';
+let pmusecs = '03';
+let sbruhrs = '00'; //short break user hours
+let sbrumins = '00';
+let sbrusecs = '04';
+let lbruhrs = '00'; //long break user hours
+let lbrumins = '00';
+let lbrusecs = '05';
 
 let startBtn = document.querySelector('.start');
 startBtn.addEventListener('click', countdown);
@@ -15,24 +27,24 @@ let pmbtn = document.querySelector('.pomodoro-time');
 pmbtn.addEventListener('click', () => {
     if (currentState === 's') {
         timerState = 'pomodoro';
-        seconds.innerHTML = '00';
-        minutes.innerHTML = '25';
+        occ = 1;
+        changeTime();
     }
 });
 let sbbtn = document.querySelector('.sbreak-time');
 sbbtn.addEventListener('click', () => {
     if (currentState === 's') {
         timerState = 'sbreak';
-        seconds.innerHTML = '00';
-        minutes.innerHTML = '05';
+        occ = 1;
+        changeTime();
     }
 });
 let lbbtn = document.querySelector('.lbreak-time');
 lbbtn.addEventListener('click', () => {
     if (currentState === 's') {
         timerState = 'lbreak';
-        seconds.innerHTML = '00';
-        minutes.innerHTML = '15';
+        occ = 1;
+        changeTime();
     }
 });
 function countdown() {
@@ -51,11 +63,28 @@ function countdown() {
             let hours = document.querySelector('.hours');
             let nhrs = parseInt(hours.innerHTML);
             if (nsecs === 0 && nmins === 0 && nhrs === 0) {
-                seconds.innerHTML = '00';
-                minutes.innerHTML = '00';
-                hours.innerHTML = '00';
-                stopTimer(intervalID);
-                return;
+                //play sound
+                if (timerState === 'pomodoro' && occ < rangeTolbreak) {
+                    occ++;
+                    timerState = 'sbreak';
+                    changeTime();
+                } else if (timerState === 'sbreak') {
+                    timerState = 'pomodoro';
+                    changeTime();
+                } else if (timerState === 'pomodoro' && occ === rangeTolbreak) {
+                    occ = 1;
+                    timerState = 'lbreak';
+                    changeTime();
+                } else if (timerState === 'lbreak') {
+                    occ = 1;
+                    timerState = 'pomodoro';
+                    changeTime();
+                }
+                // seconds.innerHTML = '00';
+                // minutes.innerHTML = '00';
+                // hours.innerHTML = '00';
+                // stopTimer(intervalID);
+                // return;
             }
             if (nsecs > 0) {
                 nsecs--;
@@ -102,22 +131,25 @@ resetBtn.addEventListener('click', resetTimer);
 
 function resetTimer() {
     if (currentState === 's') {
-        switch (timerState) {
-            case 'pomodoro':
-                hours.innerHTML = '00';
-                minutes.innerHTML = '25';
-                seconds.innerHTML = '00';
-                break;
-            case 'sbreak':
-                hours.innerHTML = '00';
-                minutes.innerHTML = '05';
-                seconds.innerHTML = '00';
-                break;
-            case 'lbreak':
-                hours.innerHTML = '00';
-                minutes.innerHTML = '15';
-                seconds.innerHTML = '00';
-                break;
-        }
+        changeTime();
+    }
+}
+function changeTime() {
+    switch (timerState) {
+        case 'pomodoro':
+            hours.innerHTML = pmuhrs;
+            minutes.innerHTML = pmumins;
+            seconds.innerHTML = pmusecs;
+            break;
+        case 'sbreak':
+            hours.innerHTML = sbruhrs;
+            minutes.innerHTML = sbrumins;
+            seconds.innerHTML = sbrusecs;
+            break;
+        case 'lbreak':
+            hours.innerHTML = lbruhrs;
+            minutes.innerHTML = lbrumins;
+            seconds.innerHTML = lbrusecs;
+            break;
     }
 }
