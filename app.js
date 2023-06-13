@@ -2,7 +2,8 @@ let currentState = 's';
 let timerState = 'pomodoro';
 let intervalID;
 let occ = 1;
-let rangeTolbreak = parseInt(document.querySelector('.range-lbr').value) || 4;
+let rangeTolbreak = 4;
+document.querySelector('.range-lbr').value = 4;
 
 let pmuhrs = '00'; //pomodoro user hours
 let pmumins = '25';
@@ -75,7 +76,8 @@ function countdown() {
             let hours = document.querySelector('.hours');
             let nhrs = parseInt(hours.innerHTML);
             if (nsecs === 0 && nmins === 0 && nhrs === 0) {
-                //play sound
+                var audio = new Audio('bell.mp3');
+                audio.play();
                 if (timerState === 'pomodoro' && occ < rangeTolbreak) {
                     occ++;
                     timerState = 'sbreak';
@@ -179,17 +181,43 @@ rsettingsBtn.addEventListener('click', () => {
 
 document.querySelector('.save-settings').addEventListener('click', () => {
     rangeTolbreak = parseInt(document.querySelector('.range-lbr').value) || 4;
-
+    if (document.querySelector('.upmh').value.length === 1) {
+        document.querySelector('.upmh').value = '0' + document.querySelector('.upmh').value;
+    }
     pmuhrs = document.querySelector('.upmh').value || '00';
-    pmumins = document.querySelector('.upmm').value || '25';
+    if (document.querySelector('.upmm').value.length === 1) {
+        document.querySelector('.upmm').value = '0' + document.querySelector('.upmm').value;
+        pmumins = document.querySelector('.upmm').value || '25';
+    }
+    if (document.querySelector('.upms').value.length === 1) {
+        document.querySelector('.upms').value = '0' + document.querySelector('.upms').value;
+    }
     pmusecs = document.querySelector('.upms').value || '00';
 
+    if (document.querySelector('.usbrh').value.length === 1) {
+        document.querySelector('.usbrh').value = '0' + document.querySelector('.usbrh').value;
+    }
     sbruhrs = document.querySelector('.usbrh').value || '00';
+    if (document.querySelector('.usbrm').value.length === 1) {
+        document.querySelector('.usbrm').value = '0' + document.querySelector('.usbrm').value;
+    }
     sbrumins = document.querySelector('.usbrm').value || '05';
+    if (document.querySelector('.usbrs').value.length === 1) {
+        document.querySelector('.usbrs').value = '0' + document.querySelector('.usbrs').value;
+    }
     sbrusecs = document.querySelector('.usbrs').value || '00';
 
+    if (document.querySelector('.ulbrh').value.length === 1) {
+        document.querySelector('.ulbrh').value = '0' + document.querySelector('.ulbrh').value;
+    }
     lbruhrs = document.querySelector('.ulbrh').value || '00';
+    if (document.querySelector('.ulbrm').value.length === 1) {
+        document.querySelector('.ulbrm').value = '0' + document.querySelector('.ulbrm').value;
+    }
     lbrumins = document.querySelector('.ulbrm').value || '15';
+    if (document.querySelector('.ulbrs').value.length === 1) {
+        document.querySelector('.ulbrs').value = '0' + document.querySelector('.ulbrs').value;
+    }
     lbrusecs = document.querySelector('.ulbrs').value || '00';
 
     changeTime();
