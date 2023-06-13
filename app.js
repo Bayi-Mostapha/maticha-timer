@@ -1,4 +1,5 @@
 let currentState = 's';
+let timerState = 'pomodoro';
 let intervalID;
 
 let startBtn = document.querySelector('.start');
@@ -13,6 +14,7 @@ let btn = document.querySelectorAll('.btn');
 let pmbtn = document.querySelector('.pomodoro-time');
 pmbtn.addEventListener('click', () => {
     if (currentState === 's') {
+        timerState = 'pomodoro';
         seconds.innerHTML = '00';
         minutes.innerHTML = '25';
     }
@@ -20,6 +22,7 @@ pmbtn.addEventListener('click', () => {
 let sbbtn = document.querySelector('.sbreak-time');
 sbbtn.addEventListener('click', () => {
     if (currentState === 's') {
+        timerState = 'sbreak';
         seconds.innerHTML = '00';
         minutes.innerHTML = '05';
     }
@@ -27,6 +30,7 @@ sbbtn.addEventListener('click', () => {
 let lbbtn = document.querySelector('.lbreak-time');
 lbbtn.addEventListener('click', () => {
     if (currentState === 's') {
+        timerState = 'lbreak';
         seconds.innerHTML = '00';
         minutes.innerHTML = '15';
     }
@@ -93,3 +97,27 @@ function stopTimer(intervalID) {
     clearInterval(intervalID);
 }
 
+let resetBtn = document.querySelector('.reset-btn');
+resetBtn.addEventListener('click', resetTimer);
+
+function resetTimer() {
+    if (currentState === 's') {
+        switch (timerState) {
+            case 'pomodoro':
+                hours.innerHTML = '00';
+                minutes.innerHTML = '25';
+                seconds.innerHTML = '00';
+                break;
+            case 'sbreak':
+                hours.innerHTML = '00';
+                minutes.innerHTML = '05';
+                seconds.innerHTML = '00';
+                break;
+            case 'lbreak':
+                hours.innerHTML = '00';
+                minutes.innerHTML = '15';
+                seconds.innerHTML = '00';
+                break;
+        }
+    }
+}
