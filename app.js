@@ -153,3 +153,14 @@ function changeTime() {
             break;
     }
 }
+
+let settingsBtn = document.querySelector('.settings-btn');
+settingsBtn.addEventListener('click', () => {
+    settings = document.querySelector('.settings-container');
+    settings.classList.toggle('show');
+});
+let rsettingsBtn = document.querySelector('.remove-settings-btn');
+rsettingsBtn.addEventListener('click', () => {
+    settings = document.querySelector('.settings-container');
+    settings.classList.toggle('show');
+});

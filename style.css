@@ -5,6 +5,10 @@
     font-family: 'Noto Sans JP', sans-serif;
 }
 
+body {
+    position: relative;
+}
+
 header {
     padding: 10px 20px;
 }
@@ -84,10 +88,54 @@ header {
     color: white;
 }
 
+.remove-settings-btn,
 .settings-btn {
     border: none;
     background-color: transparent;
     font-size: 20px;
     color: black;
     cursor: pointer;
+}
+
+.settings-container {
+    position: absolute;
+    z-index: 1;
+    top: -100dvh;
+    width: 100dvw;
+    height: 100dvh;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.settings {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+
+    position: absolute;
+    z-index: 2;
+    background-color: white;
+    width: 30%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.sinput {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.settings-btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.show {
+    top: 0;
+    opacity: 1;
 }
