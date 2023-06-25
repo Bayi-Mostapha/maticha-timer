@@ -33,10 +33,6 @@ header {
     color: white;
 }
 
-.unclick:hover {
-    cursor: not-allowed;
-}
-
 .timer {
     display: flex;
     justify-content: center;
@@ -87,6 +83,43 @@ header {
 .reset-btn:hover {
     background-color: red;
     color: white;
+}
+
+.warning-container {
+    position: absolute;
+    z-index: 2;
+    top: -100dvh;
+    width: 100dvw;
+    min-height: 100dvh;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.warning {
+    border-radius: 15px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    position: absolute;
+    z-index: 2;
+    background-color: white;
+    min-width: 30%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.remove-warning {
+    border-radius: 5px;
+    background-color: transparent;
+    border: none;
+    padding: 5px 20px;
+    background-color: red;
+    color: white;
+    cursor: pointer;
 }
 
 .remove-settings-btn,
@@ -166,6 +199,28 @@ header {
     background-color: red;
     color: white;
     cursor: pointer;
+}
+
+.input-warnings {
+    display: none;
+    border-radius: 15px;
+    padding: 10px;
+    background-color: rgb(255, 220, 220);
+}
+
+.input-warnings i {
+    color: red;
+}
+
+.empty-inputs,
+.negative-time,
+.all-times-0,
+.small-range-lbr {
+    display: none;
+}
+
+.show2 {
+    display: block;
 }
 
 .show {

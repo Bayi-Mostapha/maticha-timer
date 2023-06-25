@@ -35,7 +35,15 @@ let seconds = document.querySelector('.seconds');
 let minutes = document.querySelector('.minutes');
 let hours = document.querySelector('.hours');
 
-let btn = document.querySelectorAll('.btn');
+let warning = document.querySelector('.warning-container');
+function warningShow() {
+    if (currentState === 's')
+        warning.classList.add('show');
+}
+let rwarningBtn = document.querySelector('.remove-warning');
+rwarningBtn.addEventListener('click', () => {
+    warning.classList.remove('show');
+});
 
 let pmbtn = document.querySelector('.pomodoro-time');
 pmbtn.addEventListener('click', () => {
@@ -44,8 +52,9 @@ pmbtn.addEventListener('click', () => {
         occ = 1;
         changeTime();
     }
-    // else
-    // show warning (stop the timer first!)
+    else {
+        warning.classList.add('show');
+    }
 });
 let sbbtn = document.querySelector('.sbreak-time');
 sbbtn.addEventListener('click', () => {
@@ -54,8 +63,9 @@ sbbtn.addEventListener('click', () => {
         occ = 1;
         changeTime();
     }
-    // else
-    // show warning (stop the timer first!)
+    else {
+        warning.classList.add('show');
+    }
 });
 let lbbtn = document.querySelector('.lbreak-time');
 lbbtn.addEventListener('click', () => {
@@ -64,14 +74,11 @@ lbbtn.addEventListener('click', () => {
         occ = 1;
         changeTime();
     }
-    // else
-    // show warning (stop the timer first!)
+    else {
+        warning.classList.add('show');
+    }
 });
 function countdown() {
-    //this is to add the inclick hover to timer state btns(pomodoro sbreak and lbreak), remove it and add the warning pop up
-    for (let i = 0; i < btn.length; i++) {
-        btn[i].classList.toggle('unclick');
-    }
     if (currentState === 's') {
         startBtn.innerHTML = 'Stop timer';
         startBtn.classList.add('stop');
@@ -155,8 +162,9 @@ function resetTimer() {
     if (currentState === 's') {
         changeTime();
     }
-    // else
-    // show warning (stop the timer first!)
+    else {
+        warning.classList.add('show');
+    }
 }
 function changeTime() {
     switch (timerState) {
@@ -183,76 +191,129 @@ let settingsBtn = document.querySelector('.settings-btn');
 settingsBtn.addEventListener('click', () => {
     if (currentState === 's')
         settings.classList.add('show');
-    // else
-    // show warning (stop the timer first!)
+    else {
+        warning.classList.add('show');
+    }
 });
 let rsettingsBtn = document.querySelector('.remove-settings-btn');
 rsettingsBtn.addEventListener('click', () => {
     settings.classList.remove('show');
 });
 
-//here trying to remove the settings when user clicks outside
-// let settingsMenu = document.querySelector('.settings');
-// settingsMenu.addEventListener('mouseleave', (event) => {
-//     document.addEventListener('click', removeSettings)
-// });
-// settingsMenu.addEventListener('mouseenter', () => {
-//     document.removeEventListener('click',removeSettings)
-// });
-// function removeSettings() {
-//     if (settings.classList.contains('show')) {
-//         settings.classList.remove('show');
-//     }
-// }
-
-
 document.querySelector('.save-settings').addEventListener('click', () => {
-    //garde fous!
+    let inputWarnings = document.querySelector('.input-warnings');
+    let empty = document.querySelector('.empty-inputs');
+    let negative = document.querySelector('.negative-time');
+    let equals0 = document.querySelector('.all-times-0');
+    let smalllbr = document.querySelector('.small-range-lbr');
+    let flag = 0;
 
-    rangeTolbreak = parseInt(document.querySelector('.range-lbr').value) || 4;
+    inputWarnings.classList.remove('show2');
+    empty.classList.remove('show2');
+    negative.classList.remove('show2');
+    equals0.classList.remove('show2');
+    smalllbr.classList.remove('show2');
+
+    if (document.querySelector('.range-lbr').value === '') {
+        inputWarnings.classList.add('show2');
+        empty.classList.add('show2');
+        flag = 1;
+    }
+    rangeTolbreak = parseInt(document.querySelector('.range-lbr').value);
+    if (rangeTolbreak < 2) {
+        inputWarnings.classList.add('show2');
+        smalllbr.classList.add('show2');
+        flag = 1;
+    }
+
     if (document.querySelector('.upmh').value.length === 1) {
         document.querySelector('.upmh').value = '0' + document.querySelector('.upmh').value;
     }
-    pmuhrs = document.querySelector('.upmh').value || '00';
+    pmuhrs = document.querySelector('.upmh').value;
     if (document.querySelector('.upmm').value.length === 1) {
         document.querySelector('.upmm').value = '0' + document.querySelector('.upmm').value;
     }
-    pmumins = document.querySelector('.upmm').value || '25';
+    pmumins = document.querySelector('.upmm').value;
     if (document.querySelector('.upms').value.length === 1) {
         document.querySelector('.upms').value = '0' + document.querySelector('.upms').value;
     }
-    pmusecs = document.querySelector('.upms').value || '00';
+    pmusecs = document.querySelector('.upms').value;
+    if (pmuhrs === '' || pmumins === '' || pmusecs === '') {
+        inputWarnings.classList.add('show2');
+        empty.classList.add('show2');
+        flag = 1;
+    }
+    if (parseInt(pmuhrs) === 0 && parseInt(pmumins) === 0 && parseInt(pmusecs) === 0) {
+        inputWarnings.classList.add('show2');
+        equals0.classList.add('show2');
+        flag = 1;
+    }
+
 
     if (document.querySelector('.usbrh').value.length === 1) {
         document.querySelector('.usbrh').value = '0' + document.querySelector('.usbrh').value;
     }
-    sbruhrs = document.querySelector('.usbrh').value || '00';
+    sbruhrs = document.querySelector('.usbrh').value;
     if (document.querySelector('.usbrm').value.length === 1) {
         document.querySelector('.usbrm').value = '0' + document.querySelector('.usbrm').value;
     }
-    sbrumins = document.querySelector('.usbrm').value || '05';
+    sbrumins = document.querySelector('.usbrm').value;
     if (document.querySelector('.usbrs').value.length === 1) {
         document.querySelector('.usbrs').value = '0' + document.querySelector('.usbrs').value;
     }
-    sbrusecs = document.querySelector('.usbrs').value || '00';
+    sbrusecs = document.querySelector('.usbrs').value;
+    if (sbruhrs === '' || sbrumins === '' || sbrusecs === '') {
+        inputWarnings.classList.add('show2');
+        empty.classList.add('show2');
+        flag = 1;
+    }
+    if (parseInt(sbruhrs) === 0 && parseInt(sbrumins) === 0 && parseInt(sbrusecs) === 0) {
+        inputWarnings.classList.add('show2');
+        equals0.classList.add('show2');
+        flag = 1;
+    }
 
     if (document.querySelector('.ulbrh').value.length === 1) {
         document.querySelector('.ulbrh').value = '0' + document.querySelector('.ulbrh').value;
     }
-    lbruhrs = document.querySelector('.ulbrh').value || '00';
+    lbruhrs = document.querySelector('.ulbrh').value;
     if (document.querySelector('.ulbrm').value.length === 1) {
         document.querySelector('.ulbrm').value = '0' + document.querySelector('.ulbrm').value;
     }
-    lbrumins = document.querySelector('.ulbrm').value || '15';
+    lbrumins = document.querySelector('.ulbrm').value;
     if (document.querySelector('.ulbrs').value.length === 1) {
         document.querySelector('.ulbrs').value = '0' + document.querySelector('.ulbrs').value;
     }
-    lbrusecs = document.querySelector('.ulbrs').value || '00';
+    lbrusecs = document.querySelector('.ulbrs').value;
+    if (lbruhrs === '' || lbrumins === '' || lbrusecs === '') {
+        inputWarnings.classList.add('show2');
+        empty.classList.add('show2');
+        flag = 1;
+    }
+    if (parseInt(lbruhrs) === 0 && parseInt(lbrumins) === 0 && parseInt(lbrusecs) === 0) {
+        inputWarnings.classList.add('show2');
+        equals0.classList.add('show2');
+        flag = 1;
+    }
 
+    if (parseInt(pmuhrs) < 0 || parseInt(pmumins) < 0 || parseInt(pmusecs) < 0 || parseInt(sbruhrs) < 0 || parseInt(sbrumins) < 0 || parseInt(sbrusecs) < 0 || parseInt(lbruhrs) < 0 || parseInt(lbrumins) < 0 || parseInt(lbrusecs) < 0) {
+        inputWarnings.classList.add('show2');
+        negative.classList.add('show2');
+        flag = 1;
+    }
+    
+    if (flag)
+        return;
+
+    inputWarnings.classList.remove('show2');
+    empty.classList.remove('show2');
+    negative.classList.remove('show2');
+    equals0.classList.remove('show2');
+    smalllbr.classList.remove('show2');
     changeTime();
 
     let settings = document.querySelector('.settings-container');
-    settings.classList.toggle('show');
+    settings.classList.remove('show');
 });
 
 document.querySelector('.reset-settings').addEventListener('click', () => {

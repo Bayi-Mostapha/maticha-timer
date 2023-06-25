@@ -13,6 +13,12 @@
 </head>
 
 <body>
+    <div class="warning-container">
+        <div class="warning">
+            <p>stop the timer first!</p>
+            <button class="remove-warning">ok</button>
+        </div>
+    </div>
     <div class="settings-container">
         <div class="settings">
             <div class="sinput">
@@ -23,41 +29,55 @@
             <div class="sinput">
                 <p>Pomodoro</p>
                 <div class="inputs">
-                    <input type="number" class="upmh">
+                    <input name="upmh" type="number" class="upmh">
                     <p>:</p>
-                    <input type="number" class="upmm">
+                    <input name="upmm" type="number" class="upmm">
                     <p>:</p>
-                    <input type="number" class="upms">
+                    <input name="upms" type="number" class="upms">
                 </div>
             </div>
             <div class="sinput">
                 <p>Short break</p>
                 <div class="inputs">
-                    <input type="number" class="usbrh">
+                    <input name="usbrh" type="number" class="usbrh">
                     <p>:</p>
-                    <input type="number" class="usbrm">
+                    <input name="usbrm" type="number" class="usbrm">
                     <p>:</p>
-                    <input type="number" class="usbrs">
+                    <input name="usbrs" type="number" class="usbrs">
                 </div>
             </div>
             <div class="sinput">
                 <p>Long break</p>
                 <div class="inputs">
-                    <input type="number" class="ulbrh">
+                    <input name="ulbrh" type="number" class="ulbrh">
                     <p>:</p>
-                    <input type="number" class="ulbrm">
+                    <input name="ulbrm" type="number" class="ulbrm">
                     <p>:</p>
-                    <input type="number" class="ulbrs">
+                    <input name="ulbrs" type="number" class="ulbrs">
                 </div>
             </div>
             <div class="sinput">
                 <p>Long break interval</p>
-                <input type="number" class="range-lbr">
+                <input name="range-lbr" type="number" class="range-lbr">
             </div>
             <!-- <div class="sinput">
                 <p>auto start</p>
                 <input type="checkbox" class="bool-auto">
             </div> -->
+            <div class="input-warnings">
+                <p class="empty-inputs">
+                    <i class="fa-solid fa-xmark"></i> inputs cannot be empty
+                </p>
+                <p class="negative-time">
+                    <i class="fa-solid fa-xmark"></i> Time cannot be less than 0
+                </p>
+                <p class="all-times-0">
+                    <i class="fa-solid fa-xmark"></i> Pomodoro / shortbreak / long break cannot be 0 min
+                </p>
+                <p class="small-range-lbr">
+                    <i class="fa-solid fa-xmark"></i> Range to long break must be bigger than 2
+                </p>
+            </div>
             <div class="settings-btns">
                 <button class="reset-settings">Reset settings</button>
                 <button class="save-settings">save</button>
