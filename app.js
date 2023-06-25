@@ -29,6 +29,7 @@ document.querySelector('.ulbrs').value = '00';
 
 let startBtn = document.querySelector('.start');
 startBtn.addEventListener('click', countdown);
+//here you can add another countdown function that gets executed when the auto start is off(make it a global var talking about auto start) you need the one of off(countdown2)
 
 let seconds = document.querySelector('.seconds');
 let minutes = document.querySelector('.minutes');
@@ -43,6 +44,8 @@ pmbtn.addEventListener('click', () => {
         occ = 1;
         changeTime();
     }
+    // else
+    // show warning (stop the timer first!)
 });
 let sbbtn = document.querySelector('.sbreak-time');
 sbbtn.addEventListener('click', () => {
@@ -51,6 +54,8 @@ sbbtn.addEventListener('click', () => {
         occ = 1;
         changeTime();
     }
+    // else
+    // show warning (stop the timer first!)
 });
 let lbbtn = document.querySelector('.lbreak-time');
 lbbtn.addEventListener('click', () => {
@@ -59,14 +64,17 @@ lbbtn.addEventListener('click', () => {
         occ = 1;
         changeTime();
     }
+    // else
+    // show warning (stop the timer first!)
 });
 function countdown() {
+    //this is to add the inclick hover to timer state btns(pomodoro sbreak and lbreak), remove it and add the warning pop up
     for (let i = 0; i < btn.length; i++) {
         btn[i].classList.toggle('unclick');
     }
     if (currentState === 's') {
         startBtn.innerHTML = 'Stop timer';
-        startBtn.classList.toggle('stop');
+        startBtn.classList.add('stop');
         currentState = 'r';
         intervalID = setInterval(() => {
             let seconds = document.querySelector('.seconds');
@@ -131,7 +139,7 @@ function countdown() {
     } else if (currentState === 'r') {
         currentState = 's';
         startBtn.innerHTML = 'Start timer';
-        startBtn.classList.toggle('stop');
+        startBtn.classList.remove('stop');
         stopTimer(intervalID);
     }
 }
@@ -147,6 +155,8 @@ function resetTimer() {
     if (currentState === 's') {
         changeTime();
     }
+    // else
+    // show warning (stop the timer first!)
 }
 function changeTime() {
     switch (timerState) {
@@ -171,23 +181,34 @@ function changeTime() {
 let settings = document.querySelector('.settings-container');
 let settingsBtn = document.querySelector('.settings-btn');
 settingsBtn.addEventListener('click', () => {
-    settings.classList.toggle('show');
+    if (currentState === 's')
+        settings.classList.add('show');
+    // else
+    // show warning (stop the timer first!)
 });
 let rsettingsBtn = document.querySelector('.remove-settings-btn');
 rsettingsBtn.addEventListener('click', () => {
-    settings.classList.toggle('show');
+    settings.classList.remove('show');
 });
+
+//here trying to remove the settings when user clicks outside
 // let settingsMenu = document.querySelector('.settings');
-// document.addEventListener('click', (event) => {
-//     if (settings.classList.contains('show')) {
-//         let isClicked = settingsMenu.contains(event.target);
-//         if (!isClicked) {
-//             settings.classList.toggle('show');
-//         }
-//     }
+// settingsMenu.addEventListener('mouseleave', (event) => {
+//     document.addEventListener('click', removeSettings)
 // });
+// settingsMenu.addEventListener('mouseenter', () => {
+//     document.removeEventListener('click',removeSettings)
+// });
+// function removeSettings() {
+//     if (settings.classList.contains('show')) {
+//         settings.classList.remove('show');
+//     }
+// }
+
 
 document.querySelector('.save-settings').addEventListener('click', () => {
+    //garde fous!
+
     rangeTolbreak = parseInt(document.querySelector('.range-lbr').value) || 4;
     if (document.querySelector('.upmh').value.length === 1) {
         document.querySelector('.upmh').value = '0' + document.querySelector('.upmh').value;
