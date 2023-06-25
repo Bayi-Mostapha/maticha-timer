@@ -14,6 +14,7 @@ let sbrusecs = '00';
 let lbruhrs = '00'; //long break user hours
 let lbrumins = '15';
 let lbrusecs = '00';
+let autoStart = false;
 
 document.querySelector('.upmh').value = '00';
 document.querySelector('.upmm').value = '25';
@@ -28,8 +29,14 @@ document.querySelector('.ulbrm').value = '15';
 document.querySelector('.ulbrs').value = '00';
 
 let startBtn = document.querySelector('.start');
-startBtn.addEventListener('click', countdown);
-//here you can add another countdown function that gets executed when the auto start is off(make it a global var talking about auto start) you need the one of off(countdown2)
+startBtn.addEventListener('click', () => {
+    if (autoStart) {
+        countdownAuto();
+    }
+    else {
+        countdownNoAuto();
+    }
+});
 
 let seconds = document.querySelector('.seconds');
 let minutes = document.querySelector('.minutes');
@@ -78,7 +85,8 @@ lbbtn.addEventListener('click', () => {
         warning.classList.add('show');
     }
 });
-function countdown() {
+
+function countdownAuto() {
     if (currentState === 's') {
         startBtn.innerHTML = 'Stop timer';
         startBtn.classList.add('stop');
@@ -109,11 +117,6 @@ function countdown() {
                     timerState = 'pomodoro';
                     changeTime();
                 }
-                // seconds.innerHTML = '00';
-                // minutes.innerHTML = '00';
-                // hours.innerHTML = '00';
-                // stopTimer(intervalID);
-                // return;
             }
             if (nsecs > 0) {
                 nsecs--;
@@ -150,6 +153,81 @@ function countdown() {
         stopTimer(intervalID);
     }
 }
+
+function countdownNoAuto() {
+    if (currentState === 's') {
+        startBtn.innerHTML = 'Stop timer';
+        startBtn.classList.add('stop');
+        currentState = 'r';
+        intervalID = setInterval(() => {
+            let seconds = document.querySelector('.seconds');
+            let nsecs = parseInt(seconds.innerHTML);
+            let minutes = document.querySelector('.minutes');
+            let nmins = parseInt(minutes.innerHTML);
+            let hours = document.querySelector('.hours');
+            let nhrs = parseInt(hours.innerHTML);
+            if (nsecs === 0 && nmins === 0 && nhrs === 0) {
+                var audio = new Audio('bell.mp3');
+                audio.play();
+                if (timerState === 'pomodoro' && occ < rangeTolbreak) {
+                    occ++;
+                    timerState = 'sbreak';
+                    changeTime();
+                } else if (timerState === 'sbreak') {
+                    timerState = 'pomodoro';
+                    changeTime();
+                } else if (timerState === 'pomodoro' && occ === rangeTolbreak) {
+                    occ = 1;
+                    timerState = 'lbreak';
+                    changeTime();
+                } else if (timerState === 'lbreak') {
+                    occ = 1;
+                    timerState = 'pomodoro';
+                    changeTime();
+                }
+                //auto start
+                startBtn.innerHTML = 'Start timer';
+                startBtn.classList.remove('stop');
+                currentState = 's';
+                stopTimer(intervalID);
+                return;
+            }
+            if (nsecs > 0) {
+                nsecs--;
+                if (nsecs.toString().length === 1)
+                    seconds.innerHTML = '0' + nsecs;
+                else
+                    seconds.innerHTML = nsecs;
+            } else if (nsecs === 0) {
+                if (nmins > 0) {
+                    seconds.innerHTML = 59;
+                    nmins--;
+                    if (nmins.toString().length === 1)
+                        minutes.innerHTML = '0' + nmins;
+                    else
+                        minutes.innerHTML = nmins;
+                }
+                else if (nmins === 0) {
+                    if (nhrs > 0) {
+                        minutes.innerHTML = 59;
+                        seconds.innerHTML = 59;
+                        nhrs--;
+                        if (nhrs.toString().length === 1)
+                            hours.innerHTML = '0' + nhrs;
+                        else
+                            hours.innerHTML = nhrs;
+                    }
+                }
+            }
+        }, 1000);
+    } else if (currentState === 'r') {
+        currentState = 's';
+        startBtn.innerHTML = 'Start timer';
+        startBtn.classList.remove('stop');
+        stopTimer(intervalID);
+    }
+}
+
 
 function stopTimer(intervalID) {
     clearInterval(intervalID);
@@ -201,6 +279,8 @@ rsettingsBtn.addEventListener('click', () => {
 });
 
 document.querySelector('.save-settings').addEventListener('click', () => {
+    occ = 1;
+    autoStart = document.querySelector('#auto-start').checked;
     let inputWarnings = document.querySelector('.input-warnings');
     let empty = document.querySelector('.empty-inputs');
     let negative = document.querySelector('.negative-time');
@@ -301,7 +381,7 @@ document.querySelector('.save-settings').addEventListener('click', () => {
         negative.classList.add('show2');
         flag = 1;
     }
-    
+
     if (flag)
         return;
 
