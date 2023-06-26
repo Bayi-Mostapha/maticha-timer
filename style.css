@@ -7,10 +7,33 @@
 
 body {
     position: relative;
+    background-color: #fff;
+    background-image:
+        linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+        linear-gradient(#eee .1em, transparent .1em);
+    background-size: 100% 1.2em;
 }
 
 header {
     padding: 10px 20px;
+}
+
+.bayi {
+    text-decoration: none;
+    color: #ff6347;
+}
+
+.bayi:hover {
+    opacity: 0.8;
+}
+
+.bayi:active {
+    opacity: 0.6;
+}
+
+main {
+    margin: 0 auto;
+    max-width: 1400px;
 }
 
 .choices {
@@ -212,6 +235,7 @@ header {
     color: red;
 }
 
+.big-time,
 .empty-inputs,
 .negative-time,
 .all-times-0,
@@ -226,4 +250,55 @@ header {
 .show {
     top: 0;
     opacity: 1;
+}
+
+.active {
+    background-color: #ff6347b4;
+}
+
+@media screen and (max-width:500px) {
+    .warning {
+        width: 90%;
+    }
+
+    .choices {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .hours,
+    .minutes,
+    .scolons {
+        font-size: 75px;
+    }
+
+    .seconds {
+        font-size: 25px;
+    }
+}
+
+@media screen and (max-width:250px) {
+    .main-title {
+        font-size: 1.5rem;
+    }
+
+    .sinput {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .sinput:first-child {
+        flex-direction: row;
+    }
+
+    .hours,
+    .minutes,
+    .scolons {
+        font-size: 37px;
+    }
+
+    .seconds {
+        font-size: 12px;
+    }
 }

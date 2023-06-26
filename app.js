@@ -53,8 +53,15 @@ rwarningBtn.addEventListener('click', () => {
 });
 
 let pmbtn = document.querySelector('.pomodoro-time');
+let sbbtn = document.querySelector('.sbreak-time');
+let lbbtn = document.querySelector('.lbreak-time');
+
 pmbtn.addEventListener('click', () => {
     if (currentState === 's') {
+        pmbtn.classList.add('active');
+        sbbtn.classList.remove('active');
+        lbbtn.classList.remove('active');
+
         timerState = 'pomodoro';
         occ = 1;
         changeTime();
@@ -63,9 +70,12 @@ pmbtn.addEventListener('click', () => {
         warning.classList.add('show');
     }
 });
-let sbbtn = document.querySelector('.sbreak-time');
 sbbtn.addEventListener('click', () => {
     if (currentState === 's') {
+        pmbtn.classList.remove('active');
+        sbbtn.classList.add('active');
+        lbbtn.classList.remove('active');
+
         timerState = 'sbreak';
         occ = 1;
         changeTime();
@@ -74,9 +84,12 @@ sbbtn.addEventListener('click', () => {
         warning.classList.add('show');
     }
 });
-let lbbtn = document.querySelector('.lbreak-time');
 lbbtn.addEventListener('click', () => {
     if (currentState === 's') {
+        pmbtn.classList.remove('active');
+        sbbtn.classList.remove('active');
+        lbbtn.classList.add('active');
+
         timerState = 'lbreak';
         occ = 1;
         changeTime();
@@ -104,17 +117,29 @@ function countdownAuto() {
                 if (timerState === 'pomodoro' && occ < rangeTolbreak) {
                     occ++;
                     timerState = 'sbreak';
+                    pmbtn.classList.remove('active');
+                    sbbtn.classList.add('active');
+                    lbbtn.classList.remove('active');
                     changeTime();
                 } else if (timerState === 'sbreak') {
                     timerState = 'pomodoro';
+                    pmbtn.classList.add('active');
+                    sbbtn.classList.remove('active');
+                    lbbtn.classList.remove('active');
                     changeTime();
                 } else if (timerState === 'pomodoro' && occ === rangeTolbreak) {
                     occ = 1;
                     timerState = 'lbreak';
+                    pmbtn.classList.remove('active');
+                    sbbtn.classList.remove('active');
+                    lbbtn.classList.add('active');
                     changeTime();
                 } else if (timerState === 'lbreak') {
                     occ = 1;
                     timerState = 'pomodoro';
+                    pmbtn.classList.add('active');
+                    sbbtn.classList.remove('active');
+                    lbbtn.classList.remove('active');
                     changeTime();
                 }
             }
@@ -172,20 +197,31 @@ function countdownNoAuto() {
                 if (timerState === 'pomodoro' && occ < rangeTolbreak) {
                     occ++;
                     timerState = 'sbreak';
+                    pmbtn.classList.remove('active');
+                    sbbtn.classList.add('active');
+                    lbbtn.classList.remove('active');
                     changeTime();
                 } else if (timerState === 'sbreak') {
                     timerState = 'pomodoro';
+                    pmbtn.classList.add('active');
+                    sbbtn.classList.remove('active');
+                    lbbtn.classList.remove('active');
                     changeTime();
                 } else if (timerState === 'pomodoro' && occ === rangeTolbreak) {
                     occ = 1;
                     timerState = 'lbreak';
+                    pmbtn.classList.remove('active');
+                    sbbtn.classList.remove('active');
+                    lbbtn.classList.add('active');
                     changeTime();
                 } else if (timerState === 'lbreak') {
                     occ = 1;
                     timerState = 'pomodoro';
+                    pmbtn.classList.add('active');
+                    sbbtn.classList.remove('active');
+                    lbbtn.classList.remove('active');
                     changeTime();
                 }
-                //auto start
                 startBtn.innerHTML = 'Start timer';
                 startBtn.classList.remove('stop');
                 currentState = 's';
@@ -285,6 +321,7 @@ document.querySelector('.save-settings').addEventListener('click', () => {
     let empty = document.querySelector('.empty-inputs');
     let negative = document.querySelector('.negative-time');
     let equals0 = document.querySelector('.all-times-0');
+    let big = document.querySelector('.big-time');
     let smalllbr = document.querySelector('.small-range-lbr');
     let flag = 0;
 
@@ -292,6 +329,7 @@ document.querySelector('.save-settings').addEventListener('click', () => {
     empty.classList.remove('show2');
     negative.classList.remove('show2');
     equals0.classList.remove('show2');
+    big.classList.remove('show2');
     smalllbr.classList.remove('show2');
 
     if (document.querySelector('.range-lbr').value === '') {
@@ -306,16 +344,22 @@ document.querySelector('.save-settings').addEventListener('click', () => {
         flag = 1;
     }
 
-    if (document.querySelector('.upmh').value.length === 1) {
-        document.querySelector('.upmh').value = '0' + document.querySelector('.upmh').value;
+    if (parseInt(document.querySelector('.upmh').value) < 10) {
+        document.querySelector('.upmh').value = '0' + parseInt(document.querySelector('.upmh').value);
+    } else {
+        document.querySelector('.upmh').value = parseInt(document.querySelector('.upmh').value);
     }
     pmuhrs = document.querySelector('.upmh').value;
-    if (document.querySelector('.upmm').value.length === 1) {
-        document.querySelector('.upmm').value = '0' + document.querySelector('.upmm').value;
+    if (parseInt(document.querySelector('.upmm').value) < 10) {
+        document.querySelector('.upmm').value = '0' + parseInt(document.querySelector('.upmm').value);
+    } else {
+        document.querySelector('.upmm').value = parseInt(document.querySelector('.upmm').value);
     }
     pmumins = document.querySelector('.upmm').value;
-    if (document.querySelector('.upms').value.length === 1) {
-        document.querySelector('.upms').value = '0' + document.querySelector('.upms').value;
+    if (parseInt(document.querySelector('.upms').value) < 10) {
+        document.querySelector('.upms').value = '0' + parseInt(document.querySelector('.upms').value);
+    } else {
+        document.querySelector('.upms').value = parseInt(document.querySelector('.upms').value);
     }
     pmusecs = document.querySelector('.upms').value;
     if (pmuhrs === '' || pmumins === '' || pmusecs === '') {
@@ -330,16 +374,22 @@ document.querySelector('.save-settings').addEventListener('click', () => {
     }
 
 
-    if (document.querySelector('.usbrh').value.length === 1) {
-        document.querySelector('.usbrh').value = '0' + document.querySelector('.usbrh').value;
+    if (parseInt(document.querySelector('.usbrh').value) < 10) {
+        document.querySelector('.usbrh').value = '0' + parseInt(document.querySelector('.usbrh').value);
+    } else {
+        document.querySelector('.usbrh').value = parseInt(document.querySelector('.usbrh').value);
     }
     sbruhrs = document.querySelector('.usbrh').value;
-    if (document.querySelector('.usbrm').value.length === 1) {
-        document.querySelector('.usbrm').value = '0' + document.querySelector('.usbrm').value;
+    if (parseInt(document.querySelector('.usbrm').value) < 10) {
+        document.querySelector('.usbrm').value = '0' + parseInt(document.querySelector('.usbrm').value);
+    } else {
+        document.querySelector('.usbrm').value = parseInt(document.querySelector('.usbrm').value);
     }
     sbrumins = document.querySelector('.usbrm').value;
-    if (document.querySelector('.usbrs').value.length === 1) {
-        document.querySelector('.usbrs').value = '0' + document.querySelector('.usbrs').value;
+    if (parseInt(document.querySelector('.usbrs').value) < 10) {
+        document.querySelector('.usbrs').value = '0' + parseInt(document.querySelector('.usbrs').value);
+    } else {
+        document.querySelector('.usbrs').value = parseInt(document.querySelector('.usbrs').value);
     }
     sbrusecs = document.querySelector('.usbrs').value;
     if (sbruhrs === '' || sbrumins === '' || sbrusecs === '') {
@@ -353,16 +403,22 @@ document.querySelector('.save-settings').addEventListener('click', () => {
         flag = 1;
     }
 
-    if (document.querySelector('.ulbrh').value.length === 1) {
-        document.querySelector('.ulbrh').value = '0' + document.querySelector('.ulbrh').value;
+    if (parseInt(document.querySelector('.ulbrh').value) < 10) {
+        document.querySelector('.ulbrh').value = '0' + parseInt(document.querySelector('.ulbrh').value);
+    } else {
+        document.querySelector('.ulbrh').value = parseInt(document.querySelector('.ulbrh').value);
     }
     lbruhrs = document.querySelector('.ulbrh').value;
-    if (document.querySelector('.ulbrm').value.length === 1) {
-        document.querySelector('.ulbrm').value = '0' + document.querySelector('.ulbrm').value;
+    if (parseInt(document.querySelector('.ulbrm').value) < 10) {
+        document.querySelector('.ulbrm').value = '0' + parseInt(document.querySelector('.ulbrm').value);
+    } else {
+        document.querySelector('.ulbrm').value = parseInt(document.querySelector('.ulbrm').value);
     }
     lbrumins = document.querySelector('.ulbrm').value;
-    if (document.querySelector('.ulbrs').value.length === 1) {
-        document.querySelector('.ulbrs').value = '0' + document.querySelector('.ulbrs').value;
+    if (parseInt(document.querySelector('.ulbrs').value) < 10) {
+        document.querySelector('.ulbrs').value = '0' + parseInt(document.querySelector('.ulbrs').value);
+    } else {
+        document.querySelector('.ulbrs').value = parseInt(document.querySelector('.ulbrs').value);
     }
     lbrusecs = document.querySelector('.ulbrs').value;
     if (lbruhrs === '' || lbrumins === '' || lbrusecs === '') {
@@ -379,6 +435,11 @@ document.querySelector('.save-settings').addEventListener('click', () => {
     if (parseInt(pmuhrs) < 0 || parseInt(pmumins) < 0 || parseInt(pmusecs) < 0 || parseInt(sbruhrs) < 0 || parseInt(sbrumins) < 0 || parseInt(sbrusecs) < 0 || parseInt(lbruhrs) < 0 || parseInt(lbrumins) < 0 || parseInt(lbrusecs) < 0) {
         inputWarnings.classList.add('show2');
         negative.classList.add('show2');
+        flag = 1;
+    }
+    if (parseInt(pmuhrs) > 59 || parseInt(pmumins) > 59 || parseInt(pmusecs) > 59 || parseInt(sbruhrs) > 59 || parseInt(sbrumins) > 59 || parseInt(sbrusecs) > 59 || parseInt(lbruhrs) > 59 || parseInt(lbrumins) > 59 || parseInt(lbrusecs) > 59) {
+        inputWarnings.classList.add('show2');
+        big.classList.add('show2');
         flag = 1;
     }
 

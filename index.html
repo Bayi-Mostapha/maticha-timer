@@ -25,7 +25,7 @@
                 <h3>Settings</h3>
                 <button class="remove-settings-btn"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <h4>Time ( hours:minutes:seconds )</h4>
+            <h4>Time (hours:minutes:seconds)</h4>
             <div class="sinput">
                 <p>Pomodoro</p>
                 <div class="inputs">
@@ -72,7 +72,10 @@
                     <i class="fa-solid fa-xmark"></i> Time cannot be less than 0
                 </p>
                 <p class="all-times-0">
-                    <i class="fa-solid fa-xmark"></i> Pomodoro / shortbreak / long break cannot be 0 min
+                    <i class="fa-solid fa-xmark"></i> Pomodoro/ shortbreak/ long break cannot be 0 min
+                </p>
+                <p class="big-time">
+                    <i class="fa-solid fa-xmark"></i> hours/ minutes/ seconds cannot be &gt; 59
                 </p>
                 <p class="small-range-lbr">
                     <i class="fa-solid fa-xmark"></i> Range to long break must be bigger than 2
@@ -85,12 +88,12 @@
         </div>
     </div>
     <header>
-        <h1>Maticha timer</h1>
-        <h3>- Made by Mostapha Bayi</h3>
+        <h1 class="main-title">Maticha timer</h1>
+        <h3>- Made by <a class="bayi" target="_blank" href="https://www.linkedin.com/in/mostapha-bayi/">Mostapha Bayi</a> 😁</h3>
     </header>
     <main>
         <div class="choices">
-            <button class="btn pomodoro-time">Pomodoro</button>
+            <button class="btn pomodoro-time active">Pomodoro</button>
             <button class="btn sbreak-time">Short break</button>
             <button class="btn lbreak-time">Long break</button>
         </div>
@@ -103,7 +106,7 @@
         <div class="state-container">
             <button class="start">Start timer</button>
             <button class="reset-btn">Reset</button>
-            <button class="settings-btn"><i class="fa-solid fa-gear"></i></button>
+            <button class="settings-btn" title="settings"><i class="fa-solid fa-gear"></i></button>
         </div>
     </main>
     <script src="https://kit.fontawesome.com/a0929f6f84.js" crossorigin="anonymous"></script>
