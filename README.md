@@ -4,6 +4,7 @@
 
 The Maticha(tomato) Timer is a simple productivity tool that helps you manage your time effectively. This application allows you to break your work or study sessions into intervals of focused work and short breaks, following the popular Pomodoro Technique.
 
+**live demo:** https://bayi-mostapha.github.io/maticha-timer/
 ## Features
 
 - Customizable timers: You can set the duration of your work sessions (pomodoros), short breaks, and long breaks according to your preferences and needs.
