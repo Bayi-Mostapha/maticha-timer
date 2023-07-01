@@ -1,4 +1,4 @@
-# Maticha Timer
+# Maticha Timer🍅
 
 ## Overview
 
